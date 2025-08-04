@@ -27,6 +27,10 @@ public class CameraMovement : MonoBehaviour
         Vector3 moveDirection = (forward * vertical + right * horizontal).normalized;
 
         // Move the camera
-        transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        GetComponent<Rigidbody>().MovePosition(GetComponent<Rigidbody>().position + moveDirection * moveSpeed * Time.deltaTime);
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Collided with: " + collision.gameObject.name);
     }
 }
