@@ -32,5 +32,7 @@ public class CameraMovement : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         Debug.Log("Collided with: " + collision.gameObject.name);
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
     }
 }
