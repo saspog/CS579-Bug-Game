@@ -17,7 +17,7 @@ public class NetController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !swinging)
+        if (Input.GetKeyDown(KeyCode.Space) && !swinging)
         {
             StartCoroutine(SwingNet());
         }
