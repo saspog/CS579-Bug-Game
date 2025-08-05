@@ -1,18 +1,20 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class NetController : MonoBehaviour
 {
     public float swingAngle = -36f;
-    public float swingDuration = 10f;
+    public float swingDuration = 0.5f;
 
     private Quaternion originalRotation;
     private bool swinging = false;
 
+    private NetFollower netFollower;
+
     void Start()
     {
-        originalRotation = transform.rotation;
+        netFollower = GetComponent<NetFollower>();
+        originalRotation = transform.localRotation;
     }
 
     void Update()
@@ -23,20 +25,29 @@ public class NetController : MonoBehaviour
         }
     }
 
-    System.Collections.IEnumerator SwingNet()
+    IEnumerator SwingNet()
     {
         swinging = true;
         float elapsed = 0f;
-        Quaternion targetRotation = Quaternion.Euler(transform.eulerAngles + new Vector3(swingAngle, 0, 0));
+
+        Quaternion targetRotation = Quaternion.Euler(transform.localEulerAngles + new Vector3(swingAngle, 0, 0));
 
         while (elapsed < swingDuration)
         {
-            transform.rotation = Quaternion.Slerp(originalRotation, targetRotation, elapsed / swingDuration);
+            float t = elapsed / swingDuration;
+            Quaternion swingRotation = Quaternion.Slerp(originalRotation, targetRotation, t);
+            netFollower.SetTemporaryRotation(swingRotation);
+
             elapsed += Time.deltaTime;
             yield return null;
         }
 
-        transform.rotation = originalRotation;
+        // Return to original
+        netFollower.SetTemporaryRotation(originalRotation);
+
+        yield return new WaitForSeconds(0.05f); // small pause for visual
+        netFollower.ResetRotation();
+
         swinging = false;
     }
 }
