@@ -12,8 +12,22 @@ public class MouseLookAround : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Get input from Mouse
         rotationY += Input.GetAxis("Mouse X") * sensitivity;
         rotationX += Input.GetAxis("Mouse Y") * -1 * sensitivity;
+
+        // Calculate direction vectors
+        Vector3 forward = transform.forward;
+        Vector3 right = transform.right;
+
+        // Zero out the y component to prevent moving vertically
+        forward.y = 0f;
+        right.y = 0f;
+        forward.Normalize();
+        right.Normalize();
+
         transform.localEulerAngles = new Vector3(rotationX, rotationY, 0);
+
+        //transform.position += transform.localEulerAngles * sensitivity * Time.deltaTime;
     }
 }
