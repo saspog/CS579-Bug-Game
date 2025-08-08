@@ -698,7 +698,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 952554089}
   netTransform: {fileID: 1775556673}
-  netLocalOffset: {x: 0.55, y: -0.45, z: 1.1}
+  netLocalOffset: {x: 0.55, y: -0.57, z: 1.1}
 --- !u!1001 &2144479335
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -969,6 +969,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1472466215877348348, guid: 6ad6f9d2ffd614444ae6aaf6c20eb1d9, type: 3}
+      propertyPath: m_Direction
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1472466215877348348, guid: 6ad6f9d2ffd614444ae6aaf6c20eb1d9, type: 3}
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
@@ -994,15 +998,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7466424503968351076, guid: 6ad6f9d2ffd614444ae6aaf6c20eb1d9, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.44966996
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 7466424503968351076, guid: 6ad6f9d2ffd614444ae6aaf6c20eb1d9, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 9.313226e-10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7466424503968351076, guid: 6ad6f9d2ffd614444ae6aaf6c20eb1d9, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.89319485
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 7466424503968351076, guid: 6ad6f9d2ffd614444ae6aaf6c20eb1d9, type: 3}
       propertyPath: m_LocalRotation.z
@@ -1014,7 +1018,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7466424503968351076, guid: 6ad6f9d2ffd614444ae6aaf6c20eb1d9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 233.445
+      value: 270
       objectReference: {fileID: 0}
     - target: {fileID: 7466424503968351076, guid: 6ad6f9d2ffd614444ae6aaf6c20eb1d9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
