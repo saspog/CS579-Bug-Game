@@ -32,10 +32,9 @@ public class BugSpawner : MonoBehaviour
             if(this.rand.Next(1,101) <= (maxBugs - this.inField.Count)) {
                 //consider spawn not being able to happen within radius of player of player view for imersion (future project)
                 float x = (float)this.rand.NextDouble()*8;
-                float y = (float)this.rand.NextDouble() + 1f;
                 float z = (float)this.rand.NextDouble()*10-54;
                 this.inField.Add(GameObject.Instantiate(this.tBugList[0],
-                                                        new Vector3(x, y, z), //change this vector to better encompass area
+                                                        new Vector3(x, 1.5f, z), //change this vector to better encompass area
                                                         Quaternion.identity)
                 );
 

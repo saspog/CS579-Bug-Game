@@ -30,7 +30,6 @@ public class NetCapturer : MonoBehaviour
                 break;
             case "Butterfly":
                 Debug.Log("Butterfly caught by NetRotator!");
-                Destroy(other.gameObject);
                 break;
             case "DragonFly":
                 Debug.Log("Dragon Fly caught by NetRotator!");
