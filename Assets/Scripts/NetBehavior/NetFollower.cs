@@ -4,7 +4,7 @@ using UnityEngine;
 public class NetFollower : MonoBehaviour
 {
     [SerializeField] private Transform cameraTransform;
-    [SerializeField] private Transform netTransform;
+    [SerializeField] public Transform netTransform;
     [SerializeField] private Vector3 netLocalOffset = new Vector3(0f, -0.5f, 1f);
 
     private Quaternion originalLocalRotation;

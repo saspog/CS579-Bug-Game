@@ -58,12 +58,15 @@ public class NetController : MonoBehaviour
             netTriggerCollider.enabled = true;
         }
 
-        Quaternion targetRotation = Quaternion.Euler(transform.localEulerAngles + new Vector3(swingAngle, 0, 0));
+        //Quaternion targetRotation = Quaternion.Euler(transform.localEulerAngles + new Vector3(swingAngle, 0, 0));
+        Quaternion startLocalRot = netFollower.netTransform.localRotation;
+        Quaternion targetLocalRot = startLocalRot * Quaternion.Euler(swingAngle, 0f, 0f); 
 
         while (elapsed < swingDuration)
         {
             float t = elapsed / swingDuration;
-            Quaternion swingRotation = Quaternion.Slerp(originalRotation, targetRotation, t);
+            Quaternion swingRotation = Quaternion.Slerp(startLocalRot, targetLocalRot, t);
+
             netFollower.SetTemporaryRotation(swingRotation);
 
             elapsed += Time.deltaTime;
