@@ -7,14 +7,36 @@ public class NetController : MonoBehaviour
     public float swingDuration = 0.5f;
 
     private Quaternion originalRotation;
-    private bool swinging = false;
+    public bool swinging = false;
 
     private NetFollower netFollower;
+
+    private Collider netTriggerCollider;
 
     void Start()
     {
         netFollower = GetComponent<NetFollower>();
         originalRotation = transform.localRotation;
+
+
+        Collider[] colliders = GetComponentsInChildren<Collider>();
+        Debug.Log($"Found {colliders.Length} colliders on net and children:");
+        foreach (var col in colliders)
+        {
+            Debug.Log($"- {col.gameObject.name} enabled={col.enabled} isTrigger={col.isTrigger}");
+        }
+
+        if (netTriggerCollider == null)
+        {
+            netTriggerCollider = GetComponentInChildren<Collider>();
+        }
+
+        if (netTriggerCollider != null)
+        {
+            netTriggerCollider.enabled = false;
+        }
+        else
+        Debug.LogError("Net trigger collider not found!");
     }
 
     void Update()
@@ -30,12 +52,21 @@ public class NetController : MonoBehaviour
         swinging = true;
         float elapsed = 0f;
 
-        Quaternion targetRotation = Quaternion.Euler(transform.localEulerAngles + new Vector3(swingAngle, 0, 0));
+        if (netTriggerCollider != null)
+        {
+            Debug.Log("Enabling net collider for swing");
+            netTriggerCollider.enabled = true;
+        }
+
+        //Quaternion targetRotation = Quaternion.Euler(transform.localEulerAngles + new Vector3(swingAngle, 0, 0));
+        Quaternion startLocalRot = netFollower.netTransform.localRotation;
+        Quaternion targetLocalRot = startLocalRot * Quaternion.Euler(swingAngle, 0f, 0f); 
 
         while (elapsed < swingDuration)
         {
             float t = elapsed / swingDuration;
-            Quaternion swingRotation = Quaternion.Slerp(originalRotation, targetRotation, t);
+            Quaternion swingRotation = Quaternion.Slerp(startLocalRot, targetLocalRot, t);
+
             netFollower.SetTemporaryRotation(swingRotation);
 
             elapsed += Time.deltaTime;
@@ -49,5 +80,10 @@ public class NetController : MonoBehaviour
         netFollower.ResetRotation();
 
         swinging = false;
+
+        if (netTriggerCollider != null)
+        {
+            netTriggerCollider.enabled = false;
+        }
     }
 }
