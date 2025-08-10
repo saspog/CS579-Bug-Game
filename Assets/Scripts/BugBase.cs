@@ -6,6 +6,7 @@ public class BugBase : MonoBehaviour
     bool move;
     bool caught;
     Vector3 takeoff;
+    Vector3 v;
     System.Random rand;
 
     //Caught getter
@@ -15,18 +16,19 @@ public class BugBase : MonoBehaviour
     public void setCaught(bool caught) { this.caught = caught; }
     
     //Collision removal
-    void OnCollisionEnter(Collision col)
+    void OnTriggerEnter(Collider col)
     {
-        //Not detecting collisions for some reason, look into 
-        this.move = false;
-        this.takeoff = Vector3.zero;
-        ContactPoint[] cp = new ContactPoint[1];
-        int j = col.GetContacts(cp);
-        for (int i = 0; i < j; i++)
+        if (col.gameObject.name != "NetCollider")
         {
-            this.takeoff += cp[i].normal;
+            this.transform.Translate(-this.v);
+            this.transform.Rotate(0, 180, 0);
+            this.v = Vector3.zero;
+            this.move = false;
+        } else
+        {
+            this.setCaught(true);
+            this.v = Vector3.zero;
         }
-        Vector3.Normalize(this.takeoff);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -34,7 +36,7 @@ public class BugBase : MonoBehaviour
     {
         this.rand = new System.Random();
         this.move = true; //starts the bug on movement right away
-        this.GetComponent<Rigidbody>().linearVelocity = Vector3.forward / 5;
+        this.v = Vector3.back / 100;
     }
 
     // Update is called once per frame
@@ -45,19 +47,18 @@ public class BugBase : MonoBehaviour
             if (this.rand.Next(500) == 0)
             {
                 this.move = true;
-                this.transform.eulerAngles = this.takeoff;
-                this.GetComponent<Rigidbody>().linearVelocity = Vector3.forward / 5;
+                this.v = Vector3.back / 100;
             }
         } else
         {
-            if (this.rand.Next(30) == 0)
+            if (this.rand.Next(20) == 0)
             {
-                float randx = (float)this.rand.NextDouble() * 10f;
-                float randy = (float)this.rand.NextDouble() * 10f;
-                float randz = (float)this.rand.NextDouble() * 10f;
+                float randx = (float)this.rand.NextDouble() * 2 - 1;
+                float randy = (float)this.rand.NextDouble() * 30f - 15f;
+                float randz = (float)this.rand.NextDouble() * 2 - 1;
                 this.transform.Rotate(randx, randy, randz);
             }
         }
-        this.transform.Translate(GetComponent<Rigidbody>().linearVelocity);
+        this.transform.Translate(this.v);
     }
 }

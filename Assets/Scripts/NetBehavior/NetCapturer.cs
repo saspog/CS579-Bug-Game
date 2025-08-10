@@ -11,23 +11,22 @@ public class NetCapturer : MonoBehaviour
         if (other.gameObject.tag == "Spider")
         {
             Debug.Log("Spider caught by NetRotator!");
-            Destroy(other.gameObject);
-            //gameObject.SetActive(false);
+            other.gameObject.SetActive(false);
         }
         else if (other.gameObject.tag == "Butterfly")
         {
             Debug.Log("Butterfly caught by NetRotator!");
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
         }
         else if (other.gameObject.tag == "DragonFly")
         {
             Debug.Log("Dragon Fly caught by NetRotator!");
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
         }
         else if (other.gameObject.tag == "Stickbug")
         {
             Debug.Log("Stickbug caught by NetRotator!");
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
         }
         else
         {
